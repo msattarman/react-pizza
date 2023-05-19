@@ -6,6 +6,7 @@ import Sort from './components/Sort';
 import PizzaBlock from './components/PizzaBlock';
 
 import './scss/app.scss';
+import Skeleton from './components/PizzaBlock/Skeleton';
 
 
 // console.log(pizzas);
