@@ -12,26 +12,21 @@ import { SearchContext } from '../App';
 
 const Home = () => {
    const dispatch = useDispatch();
-   const categoryId = useSelector((state) => state.filter.categoryId);
+   const { categoryId, sort } = useSelector((state) => state.filter);
 
 
    const { searchValue } = React.useContext(SearchContext);
    const [items, setItems] = React.useState([]);
    const [isLoading, setIsLoading] = React.useState(true);
-   // const [categoryId, setCategoryId] = React.useState(0);
    const [currentPage, setCurrentPage] = React.useState(1);
-   const [sortType, setSortType] = React.useState({
-      name: 'популярности',
-      sortProperty: 'rating'
-   });
 
    const onChangeCategory = (id) => {
       console.log(id);
       dispatch(setCategoryId(id));
    }
 
-   const sortBy = sortType.sortProperty.replace('-', '');
-   const order = sortType.sortProperty.includes('-') ? 'ask' : 'desc';
+   const sortBy = sort.sortProperty.replace('-', '');
+   const order = sort.sortProperty.includes('-') ? 'ask' : 'desc';
    const category = categoryId > 0 ? `category=${categoryId}` : '';
    const search = searchValue ? `&search=${searchValue}` : '';
 
@@ -46,7 +41,7 @@ const Home = () => {
             setIsLoading(false);
          });
       window.scrollTo(0, 0);
-   }, [categoryId, sortType, searchValue, currentPage]);
+   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
    const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index} />)
 
@@ -56,7 +51,7 @@ const Home = () => {
       <div className="container">
          <div className="content__top">
             <Categories value={categoryId} onChangeCategory={onChangeCategory} />
-            <Sort value={sortType} onChangeSort={(i) => setSortType(i)} />
+            <Sort />
          </div>
          <h2 className="content__title">Все пиццы</h2>
          <div className="content__items">
