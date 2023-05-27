@@ -5,6 +5,14 @@ import { SearchContext } from '../../App';
 
 const Search = () => {
    const { searchValue, setSearchValue } = React.useContext(SearchContext);
+   const inputRef = React.useRef();
+
+   const onClickClear = () => {
+      setSearchValue('');
+      inputRef.current.focus();
+   }
+
+   console.log(inputRef);
 
    return (
       <div className={styles.root}>
@@ -13,6 +21,7 @@ const Search = () => {
             <path d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#323232" strokeWidth="2" />
          </svg>
          <input
+            ref={inputRef}
             value={searchValue} 
             onChange={e => setSearchValue(e.target.value)}
             className={styles.input}
@@ -20,7 +29,7 @@ const Search = () => {
          />
          {searchValue &&
             <svg
-               onClick={() => setSearchValue('')}
+               onClick={onClickClear}
                className={styles.close} viewBox="0 0 24 24" fill="none">
                <path d="M9.16998 14.83L14.83 9.17004" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                <path d="M14.83 14.83L9.16998 9.17004" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
