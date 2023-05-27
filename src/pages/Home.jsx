@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setCategoryId } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
@@ -13,19 +13,19 @@ import { SearchContext } from '../App';
 
 const Home = () => {
    const dispatch = useDispatch();
-   const { categoryId, sort } = useSelector((state) => state.filter);
-
+   const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
 
    const { searchValue } = React.useContext(SearchContext);
    const [items, setItems] = React.useState([]);
    const [isLoading, setIsLoading] = React.useState(true);
-   const [currentPage, setCurrentPage] = React.useState(1);
 
    const onChangeCategory = (id) => {
-      console.log(id);
       dispatch(setCategoryId(id));
    }
 
+   const onChangePage = (number) => {
+      dispatch(setCurrentPage(number));
+   }
 
    React.useEffect(() => {
       setIsLoading(true);
@@ -35,20 +35,11 @@ const Home = () => {
       const category = categoryId > 0 ? `category=${categoryId}` : '';
       const search = searchValue ? `&search=${searchValue}` : '';
 
-      // fetch(
-      //    `https://64664993ba7110b6639ccaf5.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
-      // )
-      //    .then((res) => res.json())
-      //    .then((arr) => {
-      //       setItems(arr);
-      //       setIsLoading(false);
-      //    });
-
-      axios.get(`https://64664993ba7110b6639ccaf5.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`).then((res) => {
-         console.log(res.data);
-         setItems(res.data);
-         setIsLoading(false);
-      })
+      axios.get(`https://64664993ba7110b6639ccaf5.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`)
+         .then((res) => {
+            setItems(res.data);
+            setIsLoading(false);
+         })
 
       window.scrollTo(0, 0);
    }, [categoryId, sort.sortProperty, searchValue, currentPage]);
@@ -70,7 +61,7 @@ const Home = () => {
                : pizzas
             }
          </div>
-         <Pagination onChangePage={(number) => setCurrentPage(number)} />
+         <Pagination currentPage={currentPage} onChangePage={onChangePage} />
       </div>
    )
 }
