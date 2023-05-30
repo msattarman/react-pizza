@@ -93,7 +93,7 @@ const Home = () => {
 
    }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
-   const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index} />)
+   const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />)
 
    const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
 
