@@ -8,6 +8,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 
    const dispatch = useDispatch();
    const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+
    const [activeType, setActiveType] = React.useState(0);
    const [activeSize, setActiveSize] = React.useState(0);
 
@@ -20,7 +21,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
          price,
          imageUrl,
          type: typeNames[activeType],
-         size: activeSize,
+         size: sizes[activeSize],
       };
       dispatch(addItem(item));
    };
