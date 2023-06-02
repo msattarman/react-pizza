@@ -10,7 +10,6 @@ import NotFound from './components/NotFoundBlock';
 
 import './scss/app.scss';
 
-
 function App() {
    return (
       <div className="wrapper">
