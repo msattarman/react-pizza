@@ -11,7 +11,6 @@ import { list } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { SearchContext } from '../App';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 
