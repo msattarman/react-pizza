@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Categories({ value, onChangeCategory }) {
+const Categories = ({ value, onChangeCategory }) => {
 
    const categories = [
       'Все',
