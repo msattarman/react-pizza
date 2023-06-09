@@ -4,14 +4,14 @@ import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
-import { list } from '../components/Sort';
+import { sortList } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
 
 const Home = () => {
@@ -20,8 +20,8 @@ const Home = () => {
    const isSearch = React.useRef(false);
    const isMounted = React.useRef(false);
 
-   const { items, status } = useSelector((state) => state.pizza);
-   const { categoryId, sort, currentPage, searchValue } = useSelector((state) => state.filter);
+   const { items, status } = useSelector(selectPizzaData);
+   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
    const onChangeCategory = (id) => {
       dispatch(setCategoryId(id));
@@ -68,7 +68,7 @@ const Home = () => {
       if (window.location.search) {
          const params = qs.parse(window.location.search.substring(1));
 
-         const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
+         const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty)
 
          dispatch(
             setFilters({
