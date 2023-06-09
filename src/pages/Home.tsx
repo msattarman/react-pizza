@@ -14,7 +14,7 @@ import Pagination from '../components/Pagination';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
 
-const Home = () => {
+const Home: React.FC = () => {
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const isSearch = React.useRef(false);
@@ -23,12 +23,12 @@ const Home = () => {
    const { items, status } = useSelector(selectPizzaData);
    const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
-   const onChangeCategory = (id) => {
+   const onChangeCategory = (id: number) => {
       dispatch(setCategoryId(id));
    }
 
-   const onChangePage = (number) => {
-      dispatch(setCurrentPage(number));
+   const onChangePage = (page: number) => {
+      dispatch(setCurrentPage(page));
    }
 
    const getPizzas = async () => {
@@ -38,6 +38,7 @@ const Home = () => {
       const search = searchValue ? `&search=${searchValue}` : '';
 
       dispatch(
+         // @ts-ignore
          fetchPizzas({
             sortBy,
             order,
@@ -94,7 +95,7 @@ const Home = () => {
 
    const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />)
 
-   const pizzas = items.map((obj) => <Link key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj} /></Link>)
+   const pizzas = items.map((obj: any) => <Link key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj} /></Link>)
 
    return (
       <div className="container">
