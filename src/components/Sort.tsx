@@ -30,8 +30,12 @@ function Sort() {
    }
 
    React.useEffect(() => {
-      const click = (e: any) => {
-         if (!e.composedPath().includes(sortRef.current)) {
+      const click = (event: MouseEvent ) => {
+         const _event = event as MouseEvent & {
+            path: Node[];
+         };
+
+         if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
             setOpen(false)
          }
       }
