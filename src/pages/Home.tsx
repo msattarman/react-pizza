@@ -2,7 +2,7 @@ import React from 'react';
 import qs from 'qs';
 
 import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import Categories from '../components/Categories';
@@ -95,7 +95,7 @@ const Home: React.FC = () => {
 
    const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />)
 
-   const pizzas = items.map((obj: any) => <Link key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj} /></Link>)
+   const pizzas = items.map((obj: any) => <PizzaBlock {...obj} />)
 
    return (
       <div className="container">
