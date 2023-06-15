@@ -48,47 +48,48 @@ const Home: React.FC = () => {
       );
    };
 
-   // Если изменили параметры и был первый рендер
-   React.useEffect(() => {
-      if (isMounted.current) {
-         const queryString = qs.stringify({
-            sortProperty: sort.sortProperty,
-            categoryId,
-            currentPage,
-         });
+   // // Если изменили параметры и был первый рендер
+   // React.useEffect(() => {
+   //    if (isMounted.current) {
+   //       const queryString = qs.stringify({
+   //          sortProperty: sort.sortProperty,
+   //          categoryId,
+   //          currentPage,
+   //       });
 
-         navigate(`/?${queryString}`);
-      }
-      isMounted.current = true;
+   //       navigate(`/?${queryString}`);
+   //    }
+   //    isMounted.current = true;
 
-   }, [categoryId, sort.sortProperty, currentPage]);
+   // }, [categoryId, sort.sortProperty, currentPage]);
 
-   // Если был первый рендер, то проверяем URL параметры и сохраняем в redux.
-   React.useEffect(() => {
-      if (window.location.search) {
-         const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
+   // // Если был первый рендер, то проверяем URL параметры и сохраняем в redux.
+   // React.useEffect(() => {
+   //    if (window.location.search) {
+   //       const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
 
-         const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
+   //       const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
 
-         dispatch(setFilters({
-            searchValue: params.search,
-            categoryId: Number(params.category),
-            currentPage: Number(params.currentPage),
-            sort: sort ? sort : sortList[0],
-         }));
-      }
-      isSearch.current = true;
-   }, [])
+   //       dispatch(setFilters({
+   //          searchValue: params.search,
+   //          categoryId: Number(params.category),
+   //          currentPage: Number(params.currentPage),
+   //          sort: sort ? sort : sortList[0],
+   //       }));
+   //    }
+   //    isSearch.current = true;
+   // }, [])
 
    // Если был первый рендер, то запрашиваем пиццы
    React.useEffect(() => {
       window.scrollTo(0, 0);
 
-      if (!isSearch.current) {
-         getPizzas();
-      }
+      // if (!isSearch.current) {
+      //    getPizzas();
+      // }
+      getPizzas();
 
-      isSearch.current = false;
+      // isSearch.current = false;
 
    }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
