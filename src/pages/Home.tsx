@@ -11,9 +11,8 @@ import { sortList } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { SearchPizzaParams, fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 import { useAppDispatch } from '../redux/store';
-
 
 const Home: React.FC = () => {
    const navigate = useNavigate();
@@ -67,18 +66,18 @@ const Home: React.FC = () => {
    // Если был первый рендер, то проверяем URL параметры и сохраняем в redux.
    React.useEffect(() => {
       if (window.location.search) {
-         const params = qs.parse(window.location.search.substring(1));
+         const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
 
-         const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty)
+         const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
 
-         dispatch(
-            setFilters({
-               ...params,
-               sort,
-            }),
-         );
-         isSearch.current = true;
+         dispatch(setFilters({
+            searchValue: params.search,
+            categoryId: Number(params.category),
+            currentPage: Number(params.currentPage),
+            sort: sort ? sort : sortList[0],
+         }));
       }
+      isSearch.current = true;
    }, [])
 
    // Если был первый рендер, то запрашиваем пиццы
